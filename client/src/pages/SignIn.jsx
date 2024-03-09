@@ -1,15 +1,18 @@
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { signInStart, signInSuccess, signInFailure } from "../user/user.slice.js";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: ""
   });
-
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  
+  const user = useSelector(state => state.user);
+  const { loading, error: errorMessage } = user;
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -20,12 +23,11 @@ const SignIn = () => {
     e.preventDefault();
     
     if (!formData.password || !formData.email) {
-      return setErrorMessage("Please fill up all the required fields");
+      dispatch(signInFailure("All mfields are required"));
     }
     
     try {
-      setIsLoading(true);
-      setErrorMessage(null);
+      dispatch(dispatch(signInStart()));
       const res = await fetch('/api/auth/signin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -34,18 +36,16 @@ const SignIn = () => {
       const data = await res.json();
      
       if (data.success === false) {
-        return setErrorMessage(data.errMessage);
+        return dispatch(signInFailure(data.errMessage));
       }
 
       if (res.ok) {
         navigate('/');
       }
-
+      dispatch(signInSuccess(data));
     } catch (err) {
-      setErrorMessage(err.message);
-    } finally {
-      setIsLoading(false);
-    }
+      dispatch(signInFailure(err.messge))
+    } 
   }
 
   return (
@@ -88,10 +88,10 @@ const SignIn = () => {
             <Button
               className=" text-white bg-gradient-to-r from-slate-500 via-indigo-500 to-purple-500  w-full font-semibold"
               type="submit"
-              disabled = {isLoading}
+              disabled = {loading}
             >
               {
-                isLoading ? (
+                loading ? (
                   <>
                     <Spinner size="sm" />
                     <span className="pl-3"> Loading....</span>
