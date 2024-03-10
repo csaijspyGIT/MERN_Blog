@@ -9,8 +9,8 @@ const Header = () => {
   const path = useLocation().pathname;
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
-  const { theme } = useSelector(state => state.theme);
-  return (  
+  const { theme } = useSelector((state) => state.theme);
+  return (
     <Navbar className="border-b-2">
       <Link className="self-center font-semibold">
         <span className="px-2 py-2 bg-gradient-to-r from-slate-600 via-indigo-500 to-purple-600 rounded-lg font-semibold text-white">
@@ -28,44 +28,43 @@ const Header = () => {
         <AiOutlineSearch />
       </Button>
       <div className="flex gap-2 md:order-2">
-        <Button className="w-12 h-10 hidden sm:inline" color="gray" onClick={()=>dispatch(toggleTheme())} pill>
-          {
-            theme === "dark" ? (
-              <FaSun />
-            ): (
-              <FaMoon />
-            )
-           }
+        <Button
+          className="w-12 h-10 hidden sm:inline"
+          color="gray"
+          onClick={() => dispatch(toggleTheme())}
+          pill
+        >
+          {theme === "dark" ? <FaSun /> : <FaMoon />}
         </Button>
-        <Link to="/signin">
-          {currentUser ? (
-            <Dropdown
-              arrowIcon={false}
-              inline
-              label={
-                <Avatar
-                  alt="user"
-                  img={currentUser.profilePicture}
-                  rounded
-                />
-              }
-            >
-              <Dropdown.Header>
-                <span className="text-sm block">@{currentUser.username}</span>
-                <span className="text-sm block truncate">{currentUser.email}</span>
-              </Dropdown.Header>
-              <Link to = {"/dashboard?tab=profile"}>
-                <Dropdown.Item>Profile</Dropdown.Item>
-              </Link>
-              <Dropdown.Divider />
-              <Dropdown.Item> Sign Out</Dropdown.Item>
-            </Dropdown>
-          ) : (
-              <Button gradientDuoTone="purpleToBlue" outline>
-                Sign In
-              </Button>
-          )}
-        </Link>
+
+        {currentUser ? (
+          <Dropdown
+            arrowIcon={false}
+            inline
+            label={
+              <Avatar alt="user" img={currentUser.profilePicture} rounded />
+            }
+          >
+            <Dropdown.Header>
+              <span className="text-sm block">@{currentUser.username}</span>
+              <span className="text-sm block truncate">
+                {currentUser.email}
+              </span>
+            </Dropdown.Header>
+            <Link to={"/dashboard?tab=profile"}>
+              <Dropdown.Item>Profile</Dropdown.Item>
+            </Link>
+            <Dropdown.Divider />
+            <Dropdown.Item> Sign Out</Dropdown.Item>
+          </Dropdown>
+        ) : (
+          <Link to="/signin">
+            <Button gradientDuoTone="purpleToBlue" outline>
+              Sign In
+            </Button>
+          </Link>
+        )}
+
         <Navbar.Toggle />
       </div>
       <Navbar.Collapse>
