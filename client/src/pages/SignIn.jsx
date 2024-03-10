@@ -2,7 +2,7 @@ import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { signInStart, signInSuccess, signInFailure } from "../user/user.slice.js";
+import { signInStart, signInSuccess, signInFailure } from "../redux/user/user.slice.js";
 import OAuth from "../components/OAuth.jsx";
 
 const SignIn = () => {
