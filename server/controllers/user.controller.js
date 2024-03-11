@@ -39,21 +39,21 @@ export const updateUser = async(req, res, next) => {
         if (username !== username.toLowerCase()) {
             return next(errorHandler(400, "Username must be in lowercaser letters"));
         }
-        try {
-            const updatedUser = await User.findByIdAndUpdate(id, {
-                $set: {
-                    username: username,
-                    email: email,
-                    profilePicture: profilePicture,
-                    password:hashedPassword
-                }
-            }, { new: true });
-            const { password, ...rest } = updatedUser._doc;
-            res.status(200).json(rest);
-        } catch(err) {
-            next(err);
-        }
-
+        
+    }
+    try {
+        const updatedUser = await User.findByIdAndUpdate(id, {
+            $set: {
+                username: username,
+                email: email,
+                profilePicture: profilePicture,
+                password:hashedPassword
+            }
+        }, { new: true });
+        const { password, ...rest } = updatedUser._doc;
+        res.status(200).json(rest);
+    } catch(err) {
+        next(err);
     }
 
     
