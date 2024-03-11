@@ -32,6 +32,7 @@ const DashProfile = () => {
       uploadImage();
     }
   }, [image]);
+
   const uploadImage = async () => {
       setImageUploadError(null);
     const storage = getStorage(app);
@@ -59,10 +60,12 @@ const DashProfile = () => {
     );
   };
 
+
+
   return (
     <div className="max-w-lg mx-auto p-3 w-full">
       <h1 className="text-center text-3xl my-7 font-semibold">Profile</h1>
-      <form className="flex flex-col gap-4">
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         <input
           type="file"
           accept="image/*"
