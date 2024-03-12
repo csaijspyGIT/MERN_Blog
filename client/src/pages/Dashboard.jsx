@@ -4,6 +4,7 @@ import DashSideBar from "../components/DashSideBar";
 import DashProfile from "../components/DashProfile";
 import { useDispatch, useSelector } from "react-redux";
 import { changeTab } from "../redux/dashboard/tab.slice.js";
+import DashPost from "../components/DashPost.jsx";
 
 const Dashboard = () => {
   const location = useLocation();
@@ -23,6 +24,7 @@ const Dashboard = () => {
         <DashSideBar />
      </div>
       {tab === "profile" && <DashProfile />}
+      {tab==='posts' && <DashPost />}
     </div>
   );
 };
