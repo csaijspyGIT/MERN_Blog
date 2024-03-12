@@ -6,11 +6,13 @@ import storage from "redux-persist/lib/storage";
 import persistStore from "redux-persist/es/persistStore";
 import themeSlice from "./theme/theme.slice.js";
 import tabSlice from "./dashboard/tab.slice.js";
+import postSlice from "./user/post.slice.js";
 
 const rootReducer = combineReducers({
     user: userReducer,
     theme: themeSlice,
-    tab: tabSlice
+    tab: tabSlice,
+    post: postSlice,
 });
 
 const persistConfig = {
