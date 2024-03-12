@@ -20,7 +20,7 @@ import {
   signOutSucess,
 } from "../redux/user/user.slice.js";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
-
+import { Link } from "react-router-dom";
 
 const DashProfile = () => {
   const { currentUser, error, loading } = useSelector((state) => state.user);
@@ -146,7 +146,7 @@ const DashProfile = () => {
   const handleSignOut = async () => {
     try {
       const response = await fetch("api/user/signout", {
-        method: "POST"
+        method: "POST",
       });
       const data = await response.json();
 
@@ -155,10 +155,10 @@ const DashProfile = () => {
       } else {
         console.log(data.errMessage);
       }
-    }  catch (err) {
+    } catch (err) {
       console.log(err);
-    } 
-  }
+    }
+  };
 
   return (
     <div className="max-w-lg mx-auto p-3 w-full">
@@ -229,6 +229,17 @@ const DashProfile = () => {
         >
           Update
         </Button>
+        {currentUser.isAdmin && (
+          <Link to={"/create-post"}>
+            <Button
+              type="button"
+              gradientDuoTone="purpleToPink"
+              className="w-full"
+            >
+              Create a post
+            </Button>
+          </Link>
+        )}
 
         <div className="flex justify-between items-center text-red-600 font-semibold cursor-pointer">
           <span onClick={() => setShowModal(true)}>Delete Account</span>
